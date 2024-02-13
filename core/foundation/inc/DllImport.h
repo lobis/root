@@ -18,7 +18,7 @@
 #ifndef ROOT_DllImport
 #define ROOT_DllImport
 
-#ifndef __CINT__
+#ifndef __CLING__
 # if defined(WIN32)
 #  define R__DllImport  __declspec( dllimport )
 # else

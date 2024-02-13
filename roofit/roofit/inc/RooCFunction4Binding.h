@@ -85,7 +85,7 @@ class RooCFunction4Map {
 
  private:
 
-#ifndef __CINT__
+#ifndef __CLING__
   std::map<std::string,VO (*)(VI1,VI2,VI3,VI4)> _ptrmap ; // Pointer-to-name map
   std::map<VO (*)(VI1,VI2,VI3,VI4),std::string> _namemap ; // Name-to-pointer map
   std::map<VO (*)(VI1,VI2,VI3,VI4),std::vector<std::string> > _argnamemap ; // Pointer-to-argnamelist map

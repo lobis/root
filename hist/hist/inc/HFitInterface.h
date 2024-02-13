@@ -58,7 +58,7 @@ namespace ROOT {
 
 
 
-      //#ifndef __CINT__  // does not link on Windows (why ??)
+      //#ifndef __CLING__  // does not link on Windows (why ??)
 
       /**
          Decode list of options into fitOption

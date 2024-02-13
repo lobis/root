@@ -367,7 +367,7 @@ int  unuranMultiDim() {
 
 }
 
-#ifndef __CINT__
+#ifndef __CLING__
 int main(int argc, char **argv)
 {
    int iret = 0;

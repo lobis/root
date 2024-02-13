@@ -22,7 +22,7 @@
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef __CINT__
+#ifndef __CLING__
 #include <cstdio>
 #include <cctype>
 #include <fcntl.h>
@@ -232,7 +232,7 @@ enum ESendRecvOptions {
    kDontBlock          // send/recv as much data as possible without blocking
 };
 
-#ifdef __CINT__
+#ifdef __CLING__
 typedef void *Func_t;
 #else
 typedef void (*Func_t)();

@@ -11,7 +11,7 @@
 #ifndef ROOT_Varargs
 #define ROOT_Varargs
 
-#ifdef __CINT__
+#ifdef __CLING__
 #include <stdarg.h>
 #endif
 
@@ -32,7 +32,7 @@
    };
 
 #else
-#   ifndef __CINT__
+#   ifndef __CLING__
 #   include <stdarg.h>
 #   endif
 #   if defined(sparc) && !defined(__GNUG__) && !defined(__CC_SUN21__) && !defined(__SVR4)

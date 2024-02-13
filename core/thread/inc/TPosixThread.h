@@ -23,7 +23,7 @@
 
 #include "TThreadImp.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 #include <pthread.h>
 #endif
 

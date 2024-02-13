@@ -374,7 +374,7 @@ inline TBuffer &operator<<(TBuffer &buf, Double_t d) { buf.WriteDouble(d); retur
 inline TBuffer &operator<<(TBuffer &buf, const Char_t *c)  { buf.WriteCharP(c);  return buf; }
 inline TBuffer &operator<<(TBuffer &buf, const TString &s) { buf.WriteTString(s);return buf; }
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 #if defined(R__SOLARIS) && defined(R__GNU)
 #include <typeinfo>

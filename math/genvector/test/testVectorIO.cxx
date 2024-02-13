@@ -337,7 +337,7 @@ int testVectorIO(bool readOnly = false) {
 
   int iret = 0;
 
-// #ifdef __CINT__
+// #ifdef __CLING__
 //   gSystem->Load("libMathCore");
 //   gSystem->Load("libPhysics");
 //   using namespace ROOT::Math;

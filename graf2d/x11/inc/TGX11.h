@@ -14,7 +14,7 @@
 
 #include "TVirtualX.h"
 
-#if !defined(__CINT__)
+#if !defined(__CLING__)
 
 #ifdef Status
 // Convert Status from a CPP macro to a typedef:

@@ -23,7 +23,7 @@
 
 #include "Math/VirtualIntegrator.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 #include "Math/WrappedFunction.h"
 

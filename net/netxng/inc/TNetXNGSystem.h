@@ -39,7 +39,7 @@ private:
    std::set<void *>    fDirPtrs;
    static THashList   fgAddrFQDN;  // Cache of addresses to FQDNs
    static TMutex      fgAddrMutex; // Serialise access to the FQDN list
-#ifndef __CINT__
+#ifndef __CLING__
 private:
    XrdCl::URL        *fUrl;        // URL of this TSystem
    XrdCl::FileSystem *fFileSystem; // Cached for convenience

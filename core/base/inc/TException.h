@@ -22,7 +22,7 @@
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef __CINT__
+#ifndef __CLING__
 #include <setjmp.h>
 #else
 struct sigjmp_buf;

@@ -1232,7 +1232,7 @@ void DrawBoxWithGradientFill(Double_t y1, Double_t y2, Double_t x1, Double_t x2,
 void DrawQuadStripWithRadialGradientFill(unsigned nPoints, const Double_t *inner, const Double_t *innerRGBA,
                                         const Double_t *outer, const Double_t *outerRGBA);
 
-#ifndef __CINT__
+#ifndef __CLING__
 void DrawTrapezoidTextured(const Double_t ver[][2], Double_t zMin, Double_t zMax,
                            Double_t tMin, Double_t tMax);
 void DrawTrapezoidTextured(const Double_t ver[][3], Double_t texMin, Double_t texMax);
@@ -1247,7 +1247,7 @@ void DrawSphere(TGLQuadric *quadric, Double_t xMin, Double_t xMax, Double_t yMin
 void DrawError(Double_t xMin, Double_t xMax, Double_t yMin,
                Double_t yMax, Double_t zMin, Double_t zMax);
 
-#ifndef __CINT__
+#ifndef __CLING__
 void DrawTrapezoid(const Double_t ver[][2], Double_t zMin, Double_t zMax, Bool_t color = kTRUE);
 void DrawTrapezoid(const Double_t ver[][3]);
 #endif

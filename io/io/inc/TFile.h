@@ -337,7 +337,7 @@ public:
    ClassDefOverride(TFile,8)  //ROOT file
 };
 
-#ifndef __CINT__
+#ifndef __CLING__
 #define gFile (TFile::CurrentFile())
 
 #elif defined(__MAKECINT__)

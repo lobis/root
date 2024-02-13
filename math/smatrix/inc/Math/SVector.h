@@ -278,7 +278,7 @@ public:
 
 
 #ifdef OLD_IMPL
-#ifndef __CINT__
+#ifndef __CLING__
    /// self element-wise multiplication  with another vector
    SVector<T,D>& operator*=(const SVector<T,D>& rhs);
    /// self element-wise division with another vector
@@ -350,7 +350,7 @@ std::ostream& operator<<(std::ostream& os, const ROOT::Math::SVector<T,D>& rhs);
 
 
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 // include implementation file
 #include "Math/SVector.icc"
@@ -360,7 +360,7 @@ std::ostream& operator<<(std::ostream& os, const ROOT::Math::SVector<T,D>& rhs);
 #include "Math/BinaryOperators.h"
 #include "Math/Functions.h"
 
-#endif // __CINT__
+#endif // __CLING__
 
 
 #endif  /* ROOT_Math_SVector  */

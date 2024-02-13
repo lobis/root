@@ -2,7 +2,7 @@
 #include "Api.h"
 #include "FastAllocString.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 static const char *what = WHAT;
 #endif
 

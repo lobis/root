@@ -15,7 +15,7 @@
 #include "TVirtualMonitoring.h"
 #include "TStopwatch.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 #include <ApMon.h>
 #else
 struct ApMon;

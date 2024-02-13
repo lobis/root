@@ -3,7 +3,7 @@
     application with full acces the grapical user interface (GUI) of ROOT   */
 
 // include ALL header files needed
-#ifndef __CINT__
+#ifndef __CLING__
 #include "TROOT.h"
 #include "TApplication.h"
 #include "TBrowser.h"
@@ -39,7 +39,7 @@ void ExampleMacro_GUI() {
 }
 
 // the "dressing" code for a stand-alone ROOT application starts here
-#ifndef __CINT__
+#ifndef __CLING__
 void StandaloneApplication(int argc, char** argv) {
   // ==>> here the ROOT macro is called
   ExampleMacro_GUI();

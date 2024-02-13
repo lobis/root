@@ -290,7 +290,7 @@
 
 #if defined(__APPLE__)       /* MacOS X support, initially following FreeBSD */
 #   include <AvailabilityMacros.h>
-#   ifndef __CINT__
+#   ifndef __CLING__
 #   include <TargetConditionals.h>
 #   endif
 #   define R__MACOSX
@@ -475,7 +475,7 @@
 #endif
 
 /* produce an identifier that is almost unique inside a file */
-#ifndef __CINT__
+#ifndef __CLING__
 #   define _R__JOIN_(X,Y) _NAME2_(X,Y)
 #   define _R__JOIN3_(F,X,Y) _NAME3_(F,X,Y)
 #   define _R__UNIQUE_DICT_(X) _R__JOIN3_(R__DICTIONARY_FILENAME,X,__LINE__)

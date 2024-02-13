@@ -596,7 +596,7 @@ namespace ROOT {
       return v1 -= v2;
     }
 
-    //#endif // not __CINT__
+    //#endif // not __CLING__
 
     /**
        Multiplication of a displacement vector by real number  a*v

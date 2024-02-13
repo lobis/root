@@ -15,7 +15,7 @@
 //*-*   We need the second table since CINT doesn't understand the "define" pre-processor command
 
 
-#ifndef __CINT__
+#ifndef __CLING__
 #ifndef GLConstants
 
 #define GLConstants1(abc_prefix) \

@@ -276,7 +276,7 @@ namespace ROOT {
          // rotation and transformations
 
 
-#ifndef __CINT__
+#ifndef __CLING__
          /**
           rotation along X axis for a generic vector by an Angle alpha
           returning a new vector.

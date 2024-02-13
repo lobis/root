@@ -13,7 +13,7 @@
 #include <ROOT/RConfig.hxx>
 #include <stdio.h>
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 #ifdef NEED_SNPRINTF
 
@@ -47,6 +47,6 @@ int snprintf(char *string, size_t length, const char *format, ...);
 
 int snprintf(char *string, size_t length, const char *format, ...);
 
-#endif /* __CINT__ */
+#endif /* __CLING__ */
 
 #endif /* ROOT_snprintf */

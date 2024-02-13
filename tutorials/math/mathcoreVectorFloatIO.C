@@ -101,7 +101,7 @@ void read() {
 
 void runIt() {
 
-#if defined(__CINT__) && !defined(__MAKECINT__)
+#if defined(__CLING__) && !defined(__MAKECINT__)
    gSystem->Load("libMathCore");
    gSystem->Load("libPhysics");
    using namespace ROOT::Math ;
@@ -116,7 +116,7 @@ void runIt() {
 }
 
 void mathcoreVectorFloatIO() {
-#if defined(__CINT__) && !defined(__MAKECINT__)
+#if defined(__CLING__) && !defined(__MAKECINT__)
    gSystem->Load("libMathCore");
    gSystem->Load("libPhysics");
    using namespace ROOT::Math ;

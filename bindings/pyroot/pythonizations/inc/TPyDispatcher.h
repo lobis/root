@@ -59,7 +59,7 @@ public:
    ~TPyDispatcher();
 
 public:
-#ifndef __CINT__
+#ifndef __CLING__
    PyObject *DispatchVA(const char *format = 0, ...);
 #else
    PyObject *DispatchVA(const char *format, ...);

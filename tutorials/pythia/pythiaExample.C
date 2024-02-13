@@ -227,7 +227,7 @@ void pythiaExample(Int_t n=1000) {
    showEventSample();
 }
 
-#ifndef __CINT__
+#ifndef __CLING__
 int main(int argc, char** argv)
 {
   TApplication app("app", &argc, argv);

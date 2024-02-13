@@ -441,7 +441,7 @@ public:
     */
    SMatrix<T,D1,D2,R>& operator*=(const T& rhs);
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 
    /**
@@ -708,12 +708,12 @@ inline std::ostream& operator<<(std::ostream& os, const ROOT::Math::SMatrix<T,D1
 
 
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 #include "Math/SMatrix.icc"
 
 #include "Math/MatrixFunctions.h"
 
-#endif //__CINT__
+#endif //__CLING__
 
 #endif  /* ROOT_Math_SMatrix  */

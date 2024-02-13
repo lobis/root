@@ -23,7 +23,7 @@
 
 #include "TMutexImp.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 #include <pthread.h>
 #else
 struct pthread_mutex_t;

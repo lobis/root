@@ -27,7 +27,7 @@
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 #ifdef __CLING__
 #define WIN32_LEAN_AND_MEAN

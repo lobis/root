@@ -130,7 +130,7 @@ public:
    virtual ~TBtNode();
 
    virtual void Add(const TObject *obj, Int_t index) = 0;
-#ifndef __CINT__
+#ifndef __CLING__
    virtual TBtree *GetParentTree() const {return fTree;}
    virtual void Remove(Int_t index) = 0;
 
@@ -193,7 +193,7 @@ public:
    TBtInnerNode(TBtInnerNode *parent, TBtree *tree, TBtNode *oldroot);
    ~TBtInnerNode();
 
-#ifndef __CINT__
+#ifndef __CLING__
    void      Add(const TObject *obj, Int_t idx) override;
    void      Add(TBtItem &i, Int_t idx);
    void      Add(Int_t at, TObject *obj, TBtNode *n);
@@ -278,7 +278,7 @@ public:
    TBtLeafNode(TBtInnerNode *p, const TObject *obj = nullptr, TBtree *t = nullptr);
    ~TBtLeafNode();
 
-#ifndef __CINT__
+#ifndef __CLING__
    void       Add(const TObject *obj, Int_t idx) override;
    void       Remove(Int_t idx) override;
    void       RemoveItem(Int_t idx) { Remove(idx); }

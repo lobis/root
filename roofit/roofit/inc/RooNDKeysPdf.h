@@ -34,7 +34,7 @@ class RooArgList;
 class RooArgSet;
 class RooChangeTracker;
 
-#ifndef __CINT__
+#ifndef __CLING__
 class VecVecDouble : public std::vector<std::vector<double> >  { } ;
 class VecTVecDouble : public std::vector<TVectorD> { } ;
 typedef std::pair<Int_t, VecVecDouble::iterator > iiPair;

@@ -22,7 +22,7 @@
 // #include "Math/StaticCheck.h"
 // #endif
 
-//#ifndef __CINT__
+//#ifndef __CLING__
 //#include <memory>
 
 #include "RtypesCore.h"
@@ -58,7 +58,7 @@ class ParamFunctionBase {
    @ingroup  ParamFunctor_int
 
 */
-#ifndef __CINT__
+#ifndef __CLING__
 
 template<class ParentFunctor, class Func >
 class ParamFunctorHandler : public ParentFunctor::Impl {

@@ -26,7 +26,7 @@
 
 #include "Windows4Root.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 typedef struct
 {
    int waiters_count_;

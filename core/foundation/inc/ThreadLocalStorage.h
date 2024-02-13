@@ -89,7 +89,7 @@
 // Note that the order is relevant, more than one of the flag might be
 // on at the same time and we want to use 'best' option available.
 
-#ifdef __CINT__
+#ifdef __CLING__
 
 #  define TTHREAD_TLS(type) static type
 #  define TTHREAD_TLS_ARRAY(type,size,name) static type name[size]

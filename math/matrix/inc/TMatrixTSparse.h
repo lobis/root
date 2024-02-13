@@ -202,7 +202,7 @@ public:
    ClassDefOverride(TMatrixTSparse,3) // Template of Sparse Matrix class
 };
 
-#ifndef __CINT__
+#ifndef __CLING__
 // When building with -fmodules, it instantiates all pending instantiations,
 // instead of delaying them until the end of the translation unit.
 // We 'got away with' probably because the use and the definition of the
@@ -211,7 +211,7 @@ public:
 // In case we are building with -fmodules, we need to forward declare the
 // specialization in order to compile the dictionary G__Matrix.cxx.
 template <> TClass *TMatrixTSparse<double>::Class();
-#endif // __CINT__
+#endif // __CLING__
 
 template <class Element> inline const Element *TMatrixTSparse<Element>::GetMatrixArray  () const { return fElements; }
 template <class Element> inline       Element *TMatrixTSparse<Element>::GetMatrixArray  ()       { return fElements; }

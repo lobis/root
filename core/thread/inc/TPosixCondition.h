@@ -24,7 +24,7 @@
 
 #include "TConditionImp.h"
 
-#ifndef __CINT__
+#ifndef __CLING__
 #include <pthread.h>
 #else
 struct pthread_cond_t;

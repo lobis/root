@@ -24,7 +24,7 @@
 #include "TSystem.h"
 #include <string>
 
-#if !defined(__CINT__)
+#if !defined(__CLING__)
  #include "Windows4Root.h"
  #include <commctrl.h>
 #else

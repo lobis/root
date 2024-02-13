@@ -25,7 +25,7 @@
 
 #include "Windows4Root.h"
 
-#ifdef __CINT__
+#ifdef __CLING__
 struct CRITICAL_SECTION;
 #endif
 

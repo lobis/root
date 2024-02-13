@@ -94,7 +94,7 @@ public:
 };
 
 
-#ifndef __CINT__
+#ifndef __CLING__
 #define gPerfStats (TVirtualPerfStats::CurrentPerfStats())
 
 #elif defined(__MAKECINT__)

@@ -66,7 +66,7 @@ public:
 
    ~TQpProbSparse() override {}
 
-#ifndef __CINT__
+#ifndef __CLING__
    virtual TQpDataBase      *MakeData      (Double_t *c,
                                             Int_t nnzQ,Int_t *irowQ,Int_t *icolQ,Double_t *Q,
                                             Double_t *xlo,Bool_t *ixlo,

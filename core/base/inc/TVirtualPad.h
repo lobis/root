@@ -301,7 +301,7 @@ private:
 };
 
 
-#ifndef __CINT__
+#ifndef __CLING__
 #define gPad (TVirtualPad::Pad())
 #endif
 R__EXTERN Int_t (*gThreadXAR)(const char *xact, Int_t nb, void **ar, Int_t *iret);

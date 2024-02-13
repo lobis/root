@@ -167,7 +167,7 @@ public:
    ROOT::Math::MinimizerOptions & MinimizerOptions()  { return fMinimizerOpts; }
 
 
-#ifndef __CINT__   // this method fails on Windows
+#ifndef __CLING__   // this method fails on Windows
    /**
       set all the minimizer options using class MinimizerOptions
     */

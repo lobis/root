@@ -20,11 +20,11 @@
 //                                                                      //
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef __CINT__
+#ifndef __CLING__
 
 #include <stdlib.h>
 #include <time.h>
 
-#endif /* __CINT__ */
+#endif /* __CLING__ */
 
 #endif

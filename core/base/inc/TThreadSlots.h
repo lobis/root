@@ -38,7 +38,7 @@ namespace ROOT {
    };
 }
 
-#ifndef __CINT__
+#ifndef __CLING__
 R__EXTERN void **(*gThreadTsd)(void*,Int_t);
 #endif
 

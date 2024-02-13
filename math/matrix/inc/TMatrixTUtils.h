@@ -55,7 +55,7 @@ template<class Element> class TMatrixTSparse;
 
 template<class Element> class TElementActionT {
 
-#ifndef __CINT__
+#ifndef __CLING__
 friend class TMatrixTBase  <Element>;
 friend class TMatrixT      <Element>;
 friend class TMatrixTSym   <Element>;
@@ -85,7 +85,7 @@ private:
 
 template<class Element> class TElementPosActionT {
 
-#ifndef __CINT__
+#ifndef __CLING__
 friend class TMatrixTBase  <Element>;
 friend class TMatrixT      <Element>;
 friend class TMatrixTSym   <Element>;
