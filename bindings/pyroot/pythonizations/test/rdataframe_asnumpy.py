@@ -69,6 +69,7 @@ class RDataFrameAsNumpy(unittest.TestCase):
     """
     Testing of RDataFrame.AsNumpy pythonization
     """
+
     def test_branch_dtypes(self):
         """
         Test supported data-types for read-out
@@ -130,7 +131,7 @@ class RDataFrameAsNumpy(unittest.TestCase):
         }
         """)
         df = ROOT.ROOT.RDataFrame(5).Define("x",
-                                       "create_vector_constantsize(rdfentry_)")
+                                            "create_vector_constantsize(rdfentry_)")
         npy = df.AsNumpy()
         self.assertEqual(npy["x"].size, 5)
         self.assertEqual(list(npy["x"][0]), [0, 0, 0])
@@ -146,7 +147,7 @@ class RDataFrameAsNumpy(unittest.TestCase):
         }
         """)
         df = ROOT.ROOT.RDataFrame(5).Define("x",
-                                       "create_vector_variablesize(rdfentry_)")
+                                            "create_vector_variablesize(rdfentry_)")
         npy = df.AsNumpy()
         self.assertEqual(npy["x"].size, 5)
         self.assertEqual(list(npy["x"][3]), [0, 0, 0])
@@ -307,6 +308,12 @@ class RDataFrameAsNumpy(unittest.TestCase):
         cpparr = pyarr.result_ptr.GetValue()
         pyarr[0][0] = 42
         self.assertTrue(cpparr[0][0] == pyarr[0][0])
+
+    def test_rdataframe_as_numpy_array_from_memory(self):
+        column_name = "vector"
+        df = ROOT.RDataFrame(10).Define(column_name, "std::vector<int>{1,2,3}")
+        array = df.AsNumpy([column_name])[column_name]
+        self.assertTrue(all(isinstance(x, np.ndarray) for x in array))
 
 
 if __name__ == '__main__':
