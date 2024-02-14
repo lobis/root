@@ -43,10 +43,10 @@ snippet for an example:
 # JIT a C++ function from Python
 ROOT.gInterpreter.Declare("""
 
+from __future__ import annotations
 from . import pythonization
 from ._pyz_utils import MethodTemplateGetter, MethodTemplateWrapper
 from typing import Iterable
-from __future__ import annotations
 
 
 def RDataFrameAsNumpy(df: ROOT.RDataFrame, columns: Iterable[str] | None = None, exclude: Iterable[str] | None = None,
@@ -103,8 +103,10 @@ def RDataFrameAsNumpy(df: ROOT.RDataFrame, columns: Iterable[str] | None = None,
     result_ptrs = {}
     for column in columns:
         column_type = df.GetColumnType(column)
+        print(f"Registering Take action for column {column} of type {column_type}")
         result_ptrs[column] = df.Take[column_type](column)
 
+    print(f"pointers: {result_ptrs}")
     result = AsNumpyResult(result_ptrs, columns)
 
     if lazy:
@@ -164,7 +166,7 @@ class AsNumpyResult(object):
                 else:
                     tmp = numpy.empty(len(cpp_reference), dtype=object)
                     for i, x in enumerate(cpp_reference):
-                        tmp[i] = x  # This creates only the wrapping of the objects and does not copy.
+                        tmp[i] = numpy.array(x)  # This creates only the wrapping of the objects and does not copy.
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
 
         return self._py_arrays
