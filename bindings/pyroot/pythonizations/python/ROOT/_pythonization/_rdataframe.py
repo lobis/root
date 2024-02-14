@@ -103,10 +103,8 @@ def RDataFrameAsNumpy(df: ROOT.RDataFrame, columns: Iterable[str] | None = None,
     result_ptrs = {}
     for column in columns:
         column_type = df.GetColumnType(column)
-        print(f"Registering Take action for column {column} of type {column_type}")
         result_ptrs[column] = df.Take[column_type](column)
 
-    print(f"pointers: {result_ptrs}")
     result = AsNumpyResult(result_ptrs, columns)
 
     if lazy:
@@ -167,6 +165,11 @@ class AsNumpyResult(object):
                     tmp = numpy.empty(len(cpp_reference), dtype=object)
                     for i, x in enumerate(cpp_reference):
                         tmp[i] = numpy.array(x)  # This creates only the wrapping of the objects and does not copy.
+
+                    # in the case of a regular array, we can stack the arrays
+                    if tmp.size > 0 and all(arr.shape == tmp[0].shape for arr in tmp):
+                        tmp = numpy.stack(tmp)
+
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
 
         return self._py_arrays
