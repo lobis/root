@@ -271,7 +271,7 @@ class AsNumpyResult(object):
         self._columns = columns
         self._py_arrays = None
 
-    def GetValue(self):
+    def GetValue(self) -> dict:
         """Triggers, if necessary, the event loop to run the Take actions for
         the requested columns and produce the NumPy arrays as result.
 
@@ -293,12 +293,21 @@ class AsNumpyResult(object):
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
                 else:
                     tmp = numpy.empty(len(cpp_reference), dtype=object)
+                    failed = False
                     for i, x in enumerate(cpp_reference):
-                        tmp[i] = numpy.array(x)  # This creates only the wrapping of the objects and does not copy.
+                        # numpy can at this time convert even ragged arrays to an object array, but this will be deprecated in the future
+                        if not failed:
+                            try:
+                                # This creates only the wrapping of the objects and does not copy.
+                                tmp[i] = numpy.array(x)
+                            except Exception:
+                                failed = True
+                        if failed:
+                            tmp[i] = x
 
                     # in the case of a regular array, we can stack the arrays
-                    if tmp.size > 0 and all(arr.shape == tmp[0].shape for arr in tmp):
-                        tmp = numpy.stack(tmp)
+                    # if not failed and tmp.size > 0 and all(arr.shape == tmp[0].shape for arr in tmp):
+                    #     tmp = numpy.stack(tmp)
 
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
 

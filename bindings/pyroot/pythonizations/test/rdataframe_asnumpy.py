@@ -153,7 +153,7 @@ class RDataFrameAsNumpy(unittest.TestCase):
         npy = df.AsNumpy()
         self.assertEqual(npy["x"].size, 5)
         self.assertEqual(list(npy["x"][3]), [0, 0, 0])
-        self.assertIn("vector<unsigned int>", str(type(npy["x"][0])))
+        self.assertTrue(isinstance(npy["x"], np.ndarray))
 
     def test_read_tlorentzvector(self):
         """
@@ -311,28 +311,36 @@ class RDataFrameAsNumpy(unittest.TestCase):
         pyarr[0][0] = 42
         self.assertTrue(cpparr[0][0] == pyarr[0][0])
 
-    def test_rdataframe_as_numpy_array_from_memory(self):
+    def test_rdataframe_as_numpy_array_regular(self):
         column_name = "vector"
-        df = ROOT.RDataFrame(10).Define(column_name, "std::vector<int>{1,2,3}")
-        array = df.AsNumpy([column_name])[column_name]
-        self.assertTrue(all(isinstance(x, np.ndarray) for x in array))
+        n = 10
+        for from_file in [False, True]:
+            for shape, declaration in [
+                ((n, 3), "std::vector<int>{1,2,3}"),
+                ((n, 3), "std::vector<float>{1,2,3}"),
+                ((n, 3), "std::vector<double>{1,2,3}"),
+                ((n, 4), "std::vector<char>{'a','b','c','d'}"),
+                ((n, 3, 2), "std::vector<std::vector<int>>{{1,2},{3,4},{5,6}}"),
+            ]:
+                df = ROOT.RDataFrame(10).Define(column_name, declaration)
+                temp_file_path = None
+                if from_file:
+                    # save to disk and read back
+                    temp_file = tempfile.NamedTemporaryFile(delete=False)
+                    temp_file_path = Path(temp_file.name)
+                    temp_file.close()
 
-    def test_rdataframe_as_numpy_array_from_file(self):
-        column_name = "vector"
-        df = ROOT.RDataFrame(10).Define(column_name, "std::vector<int>{1,2,3}")
-        # generate a tmp filename in a temporary directory
+                    df.Snapshot("tree", str(temp_file_path))
+                    df = ROOT.RDataFrame("tree", str(temp_file_path))
 
-        temp_file = tempfile.NamedTemporaryFile(delete=False)
-        temp_file_path = Path(temp_file.name)
-        temp_file.close()
+                array = df.AsNumpy([column_name])[column_name]
+                self.assertTrue(isinstance(array, np.ndarray))
+                # self.assertEqual(array.shape, shape) # when we implement regular array handling
+                self.assertTrue(array.shape[0] == n)
+                self.assertTrue(all(x.shape[0] == shape[1] for x in array))
 
-        df.Snapshot("tree", str(temp_file_path))
-
-        df = ROOT.RDataFrame("tree", str(temp_file_path))
-        temp_file_path.unlink()
-
-        array = df.AsNumpy([column_name])[column_name]
-        self.assertTrue(all(isinstance(x, np.ndarray) for x in array))
+                if from_file:
+                    temp_file_path.unlink()
 
 
 if __name__ == '__main__':

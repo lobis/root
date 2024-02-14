@@ -8,6 +8,8 @@
 # For the list of contributors see $ROOTSYS/README/CREDITS.                    #
 ################################################################################
 
+from __future__ import annotations
+from typing import Iterable
 import numpy
 
 
@@ -37,3 +39,28 @@ class ndarray(numpy.ndarray):
         if obj is None:
             return
         self.result_ptr = getattr(obj, "result_ptr", None)
+
+
+def _is_ragged(iterable: Iterable) -> bool:
+    """
+    Check if the given iterable is ragged.
+    """
+    # TODO: Handle array of arrays... etc.
+    try:
+        iterable_length = len(iterable)
+    except TypeError:
+        return True
+
+    if iterable_length == 0:
+        return False
+
+    first_length = None
+    for item in iterable:
+        # iterable may not support indexing
+        first_length = len(item)
+        break
+
+    if all(len(item) == first_length for item in iterable):
+        return False
+
+    return True
