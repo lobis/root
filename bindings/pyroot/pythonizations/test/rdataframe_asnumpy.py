@@ -2,6 +2,8 @@ import unittest
 import ROOT
 import numpy as np
 import pickle
+import tempfile
+from pathlib import Path
 
 
 def make_tree(*dtypes):
@@ -312,6 +314,23 @@ class RDataFrameAsNumpy(unittest.TestCase):
     def test_rdataframe_as_numpy_array_from_memory(self):
         column_name = "vector"
         df = ROOT.RDataFrame(10).Define(column_name, "std::vector<int>{1,2,3}")
+        array = df.AsNumpy([column_name])[column_name]
+        self.assertTrue(all(isinstance(x, np.ndarray) for x in array))
+
+    def test_rdataframe_as_numpy_array_from_file(self):
+        column_name = "vector"
+        df = ROOT.RDataFrame(10).Define(column_name, "std::vector<int>{1,2,3}")
+        # generate a tmp filename in a temporary directory
+
+        temp_file = tempfile.NamedTemporaryFile(delete=False)
+        temp_file_path = Path(temp_file.name)
+        temp_file.close()
+
+        df.Snapshot("tree", str(temp_file_path))
+
+        df = ROOT.RDataFrame("tree", str(temp_file_path))
+        temp_file_path.unlink()
+
         array = df.AsNumpy([column_name])[column_name]
         self.assertTrue(all(isinstance(x, np.ndarray) for x in array))
 
