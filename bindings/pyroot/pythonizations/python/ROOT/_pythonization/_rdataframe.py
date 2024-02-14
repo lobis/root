@@ -282,7 +282,7 @@ class AsNumpyResult(object):
 
         if self._py_arrays is None:
             import numpy
-            from ROOT._pythonization._rdf_utils import ndarray
+            from ROOT._pythonization._rdf_utils import ndarray, all_same_length, is_templated_instance
 
             # Convert the C++ vectors to numpy arrays
             self._py_arrays = {}
@@ -293,21 +293,12 @@ class AsNumpyResult(object):
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
                 else:
                     tmp = numpy.empty(len(cpp_reference), dtype=object)
-                    failed = False
                     for i, x in enumerate(cpp_reference):
-                        # numpy can at this time convert even ragged arrays to an object array, but this will be deprecated in the future
-                        if not failed:
-                            try:
-                                # This creates only the wrapping of the objects and does not copy.
-                                tmp[i] = numpy.array(x)
-                            except Exception:
-                                failed = True
-                        if failed:
+                        if any(is_templated_instance(x, class_name) for class_name in
+                               ["cppyy.gbl.std.vector", "cppyy.gbl.ROOT.VecOps.RVec"]) and all_same_length(x):
+                            tmp[i] = numpy.asarray(x)
+                        else:
                             tmp[i] = x
-
-                    # in the case of a regular array, we can stack the arrays
-                    # if not failed and tmp.size > 0 and all(arr.shape == tmp[0].shape for arr in tmp):
-                    #     tmp = numpy.stack(tmp)
 
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
 

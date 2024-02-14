@@ -137,7 +137,7 @@ class RDataFrameAsNumpy(unittest.TestCase):
         npy = df.AsNumpy()
         self.assertEqual(npy["x"].size, 5)
         self.assertEqual(list(npy["x"][0]), [0, 0, 0])
-        self.assertIn("vector<unsigned int>", str(type(npy["x"][0])))
+        self.assertTrue(isinstance(npy["x"], np.ndarray))
 
     def test_read_vector_variablesize(self):
         """
@@ -341,6 +341,25 @@ class RDataFrameAsNumpy(unittest.TestCase):
 
                 if from_file:
                     temp_file_path.unlink()
+
+    def test_rdataframe_as_numpy_array_jagged(self):
+        jagged_array = ROOT.std.vector(float)()
+        column_name = "jagged_array"
+        tree = ROOT.TTree("tree", "Tree with Jagged Array")
+        tree.Branch(column_name, jagged_array)
+        n = 10
+        for i in range(n):
+            jagged_array.clear()
+            for j in range(i):
+                jagged_array.push_back(j)
+            tree.Fill()
+
+        df = ROOT.RDataFrame(tree)
+        array = df.AsNumpy([column_name])[column_name]
+        self.assertTrue(isinstance(array, np.ndarray))
+        self.assertTrue(array.shape[0] == n)
+        self.assertTrue(all(isinstance(x, np.ndarray) for x in array))
+        self.assertTrue(all(len(x) == i for i, x in enumerate(array)))
 
 
 if __name__ == '__main__':

@@ -11,6 +11,7 @@
 from __future__ import annotations
 from typing import Iterable
 import numpy
+import re
 
 
 class ndarray(numpy.ndarray):
@@ -41,26 +42,26 @@ class ndarray(numpy.ndarray):
         self.result_ptr = getattr(obj, "result_ptr", None)
 
 
-def _is_ragged(iterable: Iterable) -> bool:
+def all_same_length(iterable: Iterable) -> bool:
     """
-    Check if the given iterable is ragged.
+    Check if all elements in the given iterable have the same length. Returns True if the iterable is empty.
     """
-    # TODO: Handle array of arrays... etc.
     try:
-        iterable_length = len(iterable)
+        if len(iterable) == 0:
+            return True
     except TypeError:
         return True
 
-    if iterable_length == 0:
-        return False
+    reference = len(next(iter(iterable)))
+    return all(len(item) == reference for item in iterable)
 
-    first_length = None
-    for item in iterable:
-        # iterable may not support indexing
-        first_length = len(item)
-        break
 
-    if all(len(item) == first_length for item in iterable):
-        return False
+def is_templated_instance(obj, class_name: str) -> bool:
+    """
+    Check if the given object is a templated instance.
+    """
+    # check if it matches the pattern
+    # <class cppyy.gbl.ROOT.VecOps.RVec<float> at 0x13150a350>
 
-    return True
+    regex = re.compile(rf'<class {class_name}<.*> at 0x[0-9a-f]+>')
+    return bool(regex.match(str(type(obj))))
