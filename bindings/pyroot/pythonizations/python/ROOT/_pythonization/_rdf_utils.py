@@ -19,6 +19,7 @@ class ndarray(numpy.ndarray):
     https://docs.scipy.org/doc/numpy/user/basics.subclassing.html for more
     information on subclassing numpy arrays.
     """
+
     def __new__(cls, numpy_array, result_ptr):
         """
         Dunder method invoked at the creation of an instance of this class. It
@@ -33,5 +34,6 @@ class ndarray(numpy.ndarray):
         """
         Dunder method that fills in the instance default `result_ptr` value.
         """
-        if obj is None: return
+        if obj is None:
+            return
         self.result_ptr = getattr(obj, "result_ptr", None)
