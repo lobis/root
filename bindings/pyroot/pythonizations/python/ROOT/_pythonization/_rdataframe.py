@@ -213,7 +213,7 @@ def RDataFrameAsNumpy(df, columns=None, exclude=None, lazy=False):
     # Early check for numpy
     try:
         import numpy
-    except:
+    except ImportError:
         raise ImportError("Failed to import numpy during call of RDataFrame.AsNumpy.")
 
     # Find all column names in the dataframe if no column are specified
@@ -221,9 +221,9 @@ def RDataFrameAsNumpy(df, columns=None, exclude=None, lazy=False):
         columns = [str(c) for c in df.GetColumnNames()]
 
     # Exclude the specified columns
-    if exclude == None:
+    if exclude is None:
         exclude = []
-    columns = [col for col in columns if not col in exclude]
+    columns = [col for col in columns if col not in exclude]
 
     # Register Take action for each column
     result_ptrs = {}
@@ -252,6 +252,7 @@ class AsNumpyResult(object):
         _result_ptrs (dict): results of the AsNumpy action. The key is the
             column name, the value is the result pointer for that column.
     """
+
     def __init__(self, result_ptrs, columns):
         """Constructs an AsNumpyResult object.
 
@@ -284,12 +285,12 @@ class AsNumpyResult(object):
             for column in self._columns:
                 cpp_reference = self._result_ptrs[column].GetValue()
                 if hasattr(cpp_reference, "__array_interface__"):
-                    tmp = numpy.asarray(cpp_reference) # This adopts the memory of the C++ object.
+                    tmp = numpy.asarray(cpp_reference)  # This adopts the memory of the C++ object.
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
                 else:
                     tmp = numpy.empty(len(cpp_reference), dtype=object)
                     for i, x in enumerate(cpp_reference):
-                        tmp[i] = x # This creates only the wrapping of the objects and does not copy.
+                        tmp[i] = x  # This creates only the wrapping of the objects and does not copy.
                     self._py_arrays[column] = ndarray(tmp, self._result_ptrs[column])
 
         return self._py_arrays
@@ -380,7 +381,7 @@ class HistoProfileWrapper(MethodTemplateWrapper):
             else:
                 # Covers the case of the overloads with only model passed
                 # as argument
-               res = self._original_method(model)
+                res = self._original_method(model)
         # If the first argument is not a tuple, nothing to do, just call
         # the original implementation
         else:
@@ -402,12 +403,12 @@ def pythonize_rdataframe(klass):
     # Replace the implementation of the following RDF methods
     # to convert a tuple argument into a model object
     methods_with_TModel = {
-            'Histo1D' : RDF.TH1DModel,
-            'Histo2D' : RDF.TH2DModel,
-            'Histo3D' : RDF.TH3DModel,
-            'Profile1D' : RDF.TProfile1DModel,
-            'Profile2D' : RDF.TProfile2DModel
-            }
+        'Histo1D': RDF.TH1DModel,
+        'Histo2D': RDF.TH2DModel,
+        'Histo3D': RDF.TH3DModel,
+        'Profile1D': RDF.TProfile1DModel,
+        'Profile2D': RDF.TProfile2DModel
+    }
 
     for method_name, model_class in methods_with_TModel.items():
         # Replace the original implementation of the method
